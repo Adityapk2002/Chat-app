@@ -42,7 +42,7 @@ export function useWebsocket(){
         }
 
         if(data.type === "user_count"){
-            setUsersCount(data.payload.user_count)
+            setUsersCount(data.payload.userCount)
         }
        }
 

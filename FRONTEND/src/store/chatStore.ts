@@ -25,7 +25,7 @@ interface ChatState{
 }
 
 export const userChatStore = create<ChatState>()(
-    persist(
+   
     immer<ChatState>((set,get) => ({
         generatedRoomId : '',
         joinedStatus : false,
@@ -46,10 +46,7 @@ export const userChatStore = create<ChatState>()(
             userCount : 0,
         })
     })),
-    {
-        name: "chat-storage" // unique name for storage key
-    }
-)
+
 )
 
 // immer(...): Wraps the reducer function with Immer middleware.

@@ -1,7 +1,7 @@
 
 import { ClipboardCopy, Repeat2 } from 'lucide-react';
 import cat from '../assets/cat.svg';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { generateCode } from '../utils/generatecode';
 import { motion } from 'motion/react';
 import toast, { Toaster } from 'react-hot-toast';
@@ -33,21 +33,31 @@ export const Homepage= () => {
       roomInputRef.current?.focus()
     }
   }
+  useEffect(() => {
+  userChatStore.getState().reset();
+}, []);
+
 
 const nav = useNavigate();
 
-  const handleJoinRoom = () => {
+const handleJoinRoom = () => {
   const success = roomInput.trim().length > 0 && username.trim().length > 0;
   if (success) {
     userChatStore.getState().setRoomId(roomInput);
     userChatStore.getState().setUsername(username);
     userChatStore.getState().setJoined(true);
-    nav("/chat"); 
+    toast.dismiss(); // Optional: avoid overlapping toasts
     toast.success("Room Joined Successfully");
+    nav("/chat");
+
+
+    setRoomInput("");
+    setUsername("");
   } else {
     toast.error("Error in joining");
   }
 };
+
 
 
   const headLine = "LUME"
@@ -124,7 +134,7 @@ const nav = useNavigate();
 
             />
         <button
-         onClick={handleJoinRoom}
+         onClick={handleJoinRoom }
          className="w-2/5 border cursor-pointer text-black/70 border-black rounded-2xl py-1 px-3  hover:bg-neutral-800 hover:text-white">
          Join Room
          </button>
