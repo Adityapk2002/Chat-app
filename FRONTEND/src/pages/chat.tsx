@@ -1,7 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { userChatStore } from "../store/chatStore";
 import { Copy, LogOut, MessagesSquare, SendHorizontal } from "lucide-react";
 import toast from "react-hot-toast";
+import { useWebsocket } from "../utils/useWebsocket";
+import Message from "./messgae";
 
 export default function ChatPage(){
     const {
@@ -11,13 +13,23 @@ export default function ChatPage(){
         username,
         userCount
     } = userChatStore()
+
     const messageEndRef = useRef<HTMLDivElement>(null);
+    const [newMsg , setNewMsg] = useState("");
+    const {sendMessage} = useWebsocket();
 
     useEffect(() => {
         if(messageEndRef.current){
             messageEndRef.current.scrollTop = messageEndRef.current.scrollHeight;
         }
     },[currentMessageDetails])
+
+    const handleSend = () => {
+        if(newMsg.trim()){
+            sendMessage(newMsg.trim());
+            setNewMsg("")
+        }
+    }
 
     
     return(
@@ -46,7 +58,7 @@ export default function ChatPage(){
              </div>
 
              <div className="flex items-end flex-col">
-                <span className="px-5 text-yellow-400 font-bold text-[18px] mb-2">Aditya</span>
+                <span className="px-5 text-yellow-400 font-bold text-[18px] mb-2">{username}</span>
                 <span className="px-5 flex gap-2 items-center text-gray-300">
                     <LogOut 
                       onClick={() => {}}
@@ -56,18 +68,28 @@ export default function ChatPage(){
             </div>
 
         <div className="flex flex-col">
-            <div className="w-90 border border-white mt-5 rounded-xl" style={{ height: 'calc(100vh - 18rem)' }}>
-
+            <div
+            ref={messageEndRef} 
+            className="w-90 border border-white mt-5 rounded-xl" style={{ height: 'calc(100vh - 18rem)' }}>
+                <div className="p-3 flex flex-col gap-3">
+                    {currentMessageDetails.map((msg , index) => (
+                        <Message key={index} message={msg.message} username={msg.username} time={msg.time} />
+                    ))}
+                </div>
             </div>
 
             <div className=" mt-5 w-90 relative">
                 <input 
                 type="text"
+                value={newMsg}
+                onChange={(e) => setNewMsg(e.target.value)}
                 placeholder="Type Message"
-                 className="w-full h-14 pl-4 pr-14 border border-white rounded-xl bg-black/10 text-white
+                onKeyDown={(e) => e.key === "Enter" && handleSend()}
+                className="w-full h-14 pl-4 pr-14 border border-white rounded-xl bg-black/10 text-white
                placeholder:text-gray-400 focus:outline-none"
                 />
                 <button 
+                    onClick={handleSend}
                     className=" absolute inset-y-0 right-0 my-auto mr-2 flex items-center justify-center
                               h-10 w-10 rounded-full bg-white hover:bg-gray-200 transition"    >
                     <SendHorizontal className="h-6 z-6 text-black"/>

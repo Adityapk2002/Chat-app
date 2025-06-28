@@ -1,5 +1,10 @@
+interface MessageProps {
+  message: string;
+  username: string;
+  time: string;
+}
 
-export default function Message(){
+export default function Message(props : MessageProps){
     return(
         <>
         <div className="flex flex-col w-full ">
@@ -7,11 +12,11 @@ export default function Message(){
                 <div className="flex flex-col items-end gap-1">
                    <div className="bg-white text-black rounded-md flex flex-end">
                      <div className="text-xs font-bold text-gray-700">
-                        {/* {props.username.toUpperCase()} */}
+                        {props.username.toUpperCase()}
                      </div>
-                     {/* <span>{props.message}</span> */}
+                     <span>{props.message}</span>
                    </div>
-                   {/* <span className="text-xs text-gray-500">{props.time}</span> */}
+                   <span className="text-xs text-gray-500">{props.time}</span>
                 </div>
             </div>
                <div className="flex flex-col w-full ">
@@ -19,11 +24,11 @@ export default function Message(){
                 <div className="flex flex-col items-start gap-1">
                    <div className="bg-white text-black rounded-md flex flex-end">
                      <div className="text-xs font-bold text-gray-700">
-                        {/* {props.username.toUpperCase()} */}
+                        {props.username.toUpperCase()}
                      </div>
-                     {/* <span>{props.message}</span> */}
+                     <span>{props.message}</span>
                    </div>
-                   {/* <span className="text-xs text-gray-500">{props.time}</span> */}
+                   <span className="text-xs text-gray-500">{props.time}</span>
                 </div>
             </div>
         </div>
