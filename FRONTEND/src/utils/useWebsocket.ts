@@ -15,7 +15,7 @@ export function useWebsocket(){
 
         const socket = new WebSocket("ws://localhost:8080")
         socketRef.current = socket
-        toast.success("Websocket Connected")
+
         
        socket.onopen = () => {
         console.log("Websocket connected");
