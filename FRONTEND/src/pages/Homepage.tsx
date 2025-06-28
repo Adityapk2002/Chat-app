@@ -97,20 +97,19 @@ const handleJoinRoom = () => {
       {
         roomId && (
           <button
-           key={roomId}
-           className='w-80 px-3 py-1 mt-3 border border-black rounded-2xl text-xl flex items-center gap-2 justify-center text-black/70'>
-            {roomId} 
-            <ClipboardCopy 
             onClick={() => {
               navigator.clipboard.writeText(roomId)
               toast.success(`Room ID is copied to clipboard : ${roomId} ` , {
                 duration : 2000,
                 style : {fontWeight : 600}
-              }
-                
+              } 
               )
-            }} 
-            className='cursor-pointer text-black/70'/>
+            }}
+           key={roomId}
+           className='w-80 px-3 py-1 mt-3 border cursor-pointer border-black rounded-2xl text-xl flex items-center gap-2 justify-center text-black/70'>
+            {roomId} 
+            <ClipboardCopy  
+            className=' text-black/70'/>
             </button>
         )
       }
