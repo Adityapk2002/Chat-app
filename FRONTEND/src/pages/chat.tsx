@@ -4,6 +4,7 @@ import { Copy, LogOut, MessagesSquare, SendHorizontal } from "lucide-react";
 import toast from "react-hot-toast";
 import { useWebsocket } from "../utils/useWebsocket";
 import Message from "./messgae";
+import { useNavigate } from "react-router-dom";
 
 export default function ChatPage(){
     const {
@@ -13,6 +14,7 @@ export default function ChatPage(){
         username,
         userCount
     } = userChatStore()
+    const nav = useNavigate();
 
     const messageEndRef = useRef<HTMLDivElement>(null);
     const [newMsg , setNewMsg] = useState("");
@@ -30,6 +32,12 @@ export default function ChatPage(){
             setNewMsg("")
         }
     }
+     useEffect(() => {
+       if (!joinedStatus || !roomId || !username) {
+      toast.error("Session expired. Redirecting...");
+      nav("/");
+      }
+       }, []);
 
     
     return(
@@ -61,8 +69,12 @@ export default function ChatPage(){
                 <span className="px-5 text-yellow-400 font-bold text-[18px] mb-2">{username}</span>
                 <span className="px-5 flex gap-2 items-center text-gray-300">
                     <LogOut 
-                      onClick={() => {}}
-                      className="w-5 h-5 cursor-pointer hover:text-red-500"/>
+                        onClick={() => {
+                        userChatStore.getState().reset();
+                        nav("/")
+                         toast.success("Exited Room");
+                            }}
+                         className="w-5 h-5 cursor-pointer hover:text-red-500"/>
                      Exit</span>
               </div>
             </div>
@@ -84,7 +96,12 @@ export default function ChatPage(){
                 value={newMsg}
                 onChange={(e) => setNewMsg(e.target.value)}
                 placeholder="Type Message"
-                onKeyDown={(e) => e.key === "Enter" && handleSend()}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSend();
+                     }
+                     }}
                 className="w-full h-14 pl-4 pr-14 border border-white rounded-xl bg-black/10 text-white
                placeholder:text-gray-400 focus:outline-none"
                 />

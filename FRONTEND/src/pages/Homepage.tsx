@@ -42,7 +42,7 @@ const nav = useNavigate();
     userChatStore.getState().setRoomId(roomInput);
     userChatStore.getState().setUsername(username);
     userChatStore.getState().setJoined(true);
-    nav("/chat"); // navigate to chat page
+    nav("/chat"); 
     toast.success("Room Joined Successfully");
   } else {
     toast.error("Error in joining");

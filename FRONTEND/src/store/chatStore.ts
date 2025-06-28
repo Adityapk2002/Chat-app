@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 export interface ChatBubble{
@@ -24,6 +25,7 @@ interface ChatState{
 }
 
 export const userChatStore = create<ChatState>()(
+    persist(
     immer<ChatState>((set,get) => ({
         generatedRoomId : '',
         joinedStatus : false,
@@ -43,7 +45,11 @@ export const userChatStore = create<ChatState>()(
             username : "",
             userCount : 0,
         })
-    }))
+    })),
+    {
+        name: "chat-storage" // unique name for storage key
+    }
+)
 )
 
 // immer(...): Wraps the reducer function with Immer middleware.
