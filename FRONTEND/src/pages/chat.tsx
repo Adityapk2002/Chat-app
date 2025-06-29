@@ -82,7 +82,8 @@ export default function ChatPage(){
         <div className="flex flex-col">
             <div
             ref={messageEndRef} 
-            className="w-90 border border-white mt-5 rounded-xl" style={{ height: 'calc(100vh - 18rem)' }}>
+            className="w-90 border border-white mt-5 rounded-xl overflow-y-auto" 
+            style={{ height: 'calc(100vh - 18rem)' }}>
                 <div className="p-3 flex flex-col gap-3">
                     {currentMessageDetails.map((msg , index) => (
                         <Message key={index} message={msg.message} username={msg.username} time={msg.time} />
