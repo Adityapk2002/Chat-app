@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { userChatStore } from "../store/chatStore";
-import toast from "react-hot-toast";
 
 export function useWebsocket(){
     const socketRef = useRef<WebSocket | null>(null);

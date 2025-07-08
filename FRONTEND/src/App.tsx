@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
 
 import './App.css'
 import { Homepage } from './pages/Homepage'
 import ChatPage from './pages/chat'
-import { BrowserRouter, Route, Router, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 
 function App() {
