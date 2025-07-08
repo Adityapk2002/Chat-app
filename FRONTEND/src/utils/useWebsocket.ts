@@ -12,7 +12,7 @@ export function useWebsocket(){
 
     useEffect(() => {
 
-        const socket = new WebSocket(`ws://${window.location.hostname}:8080`);
+        const socket = new WebSocket(`wss://api-websocket-npx8.onrender.com`);
         socketRef.current = socket
         
         socket.onopen = () => {
