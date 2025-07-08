@@ -25,7 +25,7 @@ interface ChatState{
 
 export const userChatStore = create<ChatState>()(
    
-    immer<ChatState>((set,get) => ({
+    immer<ChatState>((set) => ({
         generatedRoomId : '',
         joinedStatus : false,
         currentMessageDetails : [],
