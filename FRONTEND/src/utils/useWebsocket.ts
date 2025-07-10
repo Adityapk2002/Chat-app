@@ -31,11 +31,17 @@ export function useWebsocket(){
         const data = JSON.parse(event.data);
 
         if(data.type === "chat"){
+             const istTime = new Date().toLocaleString("en-IN", {
+             timeZone: "Asia/Kolkata",
+             hour: '2-digit',
+             minute: '2-digit',
+             second: '2-digit',
+              });
             addMessage({
-                id : Date.now(),
+                id : Date.now().toLocaleString(),
                 username : data.payload.name,
                 message : data.payload.message,
-                time : data.payload.time
+                time : istTime
             })
         }
 
